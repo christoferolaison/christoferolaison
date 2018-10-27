@@ -28,7 +28,12 @@ function rewriteMain(pkg, to) {
 
 async function run() {
   const workspaces = await getWorkspaces()
-  workspaces.forEach(pkg => rewriteMain(pkg, 'dist'))
+  workspaces
+    .filter(
+      ({ name }) =>
+        name === '@christoferolaison/primitives',
+    )
+    .forEach(pkg => rewriteMain(pkg, 'dist'))
 }
 
 run()
