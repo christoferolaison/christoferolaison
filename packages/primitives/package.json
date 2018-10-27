@@ -1,6 +1,6 @@
 {
   "name": "@christoferolaison/primitives",
-  "version": "0.0.2-\"next-71c921\".0",
+  "version": null,
   "description": "Primitives",
   "main": "dist/index.js",
   "author": "Christofer Olaison",
