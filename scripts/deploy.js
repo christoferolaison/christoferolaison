@@ -3,16 +3,16 @@ const fs = require('fs')
 
 const {
   NODE_ENV,
-  ACTIVE_ENV,
+  STAGE,
   CI,
   NOW_TOKEN,
   CIRCLE_BRANCH,
 } = process.env
 
-const activeEnv = ACTIVE_ENV || NODE_ENV
+const activeEnv = STAGE || NODE_ENV
 
 if (!Boolean(activeEnv)) {
-  throw new Error('Provide "NODE_ENV" or "ACTIVE_ENV"')
+  throw new Error('Provide "NODE_ENV" or "STAGE"')
 } else if (!Boolean(NOW_TOKEN)) {
   throw new Error('Provide "NOW_TOKEN"')
 }
@@ -99,6 +99,6 @@ async function run({ stage, nowToken }) {
 }
 
 run({
-  stage: ACTIVE_ENV || NODE_ENV,
+  stage: STAGE || NODE_ENV,
   nowToken: NOW_TOKEN,
 })
