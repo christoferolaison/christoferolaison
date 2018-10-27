@@ -16,6 +16,5 @@
     "react": "16.7.0-alpha.0",
     "react-dom": "16.7.0-alpha.0",
     "serve": "10.0.2"
-  },
-  "gitHead": "f00c862e1aba58d03db19a99e118402a84371045"
+  }
 }
