@@ -17,6 +17,7 @@
     "test": "echo hello world"
   },
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "personal-web"
   ]
 }
