@@ -1,6 +1,4 @@
-const loadJsonFile = require('load-json-file')
 const execa = require('execa')
-const writeJsonFile = require('write-json-file')
 const fs = require('fs')
 
 const {
@@ -35,23 +33,9 @@ function getWorkspaces() {
   return JSON.parse(workspaces)
 }
 
-async function deploy(
-  applications,
-  { stage, nowToken, branchName },
-) {
+async function deploy(applications, { stage, nowToken }) {
   const tasks = applications.map(
     async ({ location, name }) => {
-      // if (stage === 'test') {
-      //   const cleanBranchName = branchName.replace('/', '-')
-      //   await writeJsonFile(
-      //     `${location}/.now/now.test.json`,
-      //     {
-      //       name: `${name}-${cleanBranchName}`,
-      //       type: 'static',
-      //       alias: [`${name}-${cleanBranchName}.now.sh`],
-      //     },
-      //   )
-      // }
       return new Promise(resolve => {
         now(
           [
@@ -104,13 +88,12 @@ async function deploy(
   return await Promise.all(tasks)
 }
 
-async function run({ stage, nowToken, branchName }) {
+async function run({ stage, nowToken }) {
   const workspaces = await getWorkspaces()
   const applications = workspaces.filter(hasNowConfig)
   const deployedApplications = await deploy(applications, {
     stage,
     nowToken,
-    branchName,
   })
   console.log('deployed', deployedApplications)
 }
@@ -118,5 +101,4 @@ async function run({ stage, nowToken, branchName }) {
 run({
   stage: ACTIVE_ENV || NODE_ENV,
   nowToken: NOW_TOKEN,
-  branchName: CIRCLE_BRANCH,
 })
