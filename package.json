@@ -22,7 +22,6 @@
   },
   "workspaces": [
     "packages/*",
-    "applications/*",
-    "primitives/*"
+    "applications/*"
   ]
 }
