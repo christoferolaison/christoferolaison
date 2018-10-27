@@ -13,7 +13,8 @@
   "scripts": {
     "commitmsg": "commitlint -E GIT_PARAMS",
     "precommit": "pretty-quick --staged",
-    "prettier": "prettier --write **/*.js"
+    "prettier": "prettier --write **/*.js",
+    "test": "echo hello world"
   },
   "workspaces": [
     "packages/*"
