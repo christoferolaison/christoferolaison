@@ -2,6 +2,10 @@
   "name": "root",
   "private": true,
   "devDependencies": {
+    "@babel/cli": "7.1.2",
+    "@babel/core": "7.1.2",
+    "@babel/preset-env": "7.1.0",
+    "@babel/preset-react": "7.0.0",
     "@christoferolaison/prettier-config": "0.1.0",
     "@commitlint/cli": "7.1.2",
     "@commitlint/config-conventional": "7.1.2",

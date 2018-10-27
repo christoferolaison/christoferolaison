@@ -1,5 +1,6 @@
 {
   "name": "@christoferolaison/prettier-config",
+  "private": true,
   "version": "0.1.0",
   "description": "My opinionated prettier config.",
   "keywords": [

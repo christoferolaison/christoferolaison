@@ -1,5 +1,6 @@
 {
   "name": "@christoferolaison/git-diff-prev-commit",
+  "private": true,
   "version": "0.1.0",
   "description": "Returns a list of changed files between HEAD and previous commit.",
   "keywords": [
