@@ -1,0 +1,12 @@
+{
+  "name": "@christoferolaison/text",
+  "version": "0.0.1",
+  "description": "Text primitive",
+  "main": "index.js",
+  "author": "Christofer Olaison",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "react": "16.7.0-alpha.0"
+  }
+}

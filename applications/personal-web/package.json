@@ -1,17 +1,18 @@
 {
   "name": "personal-web",
   "version": "0.0.1",
-  "description": "Personal web",
+  "description": "Gatsby hello world starter",
   "license": "MIT",
-  "private": true,
   "scripts": {
-    "dev": "next",
-    "build": "next build",
-    "start": "next start"
+    "develop": "gatsby develop",
+    "start": "npm run develop",
+    "build": "gatsby build",
+    "serve": "gatsby serve"
   },
   "dependencies": {
-    "next": "7.0.2",
-    "react": "16.7.0-alpha.0",
-    "react-dom": "16.7.0-alpha.0"
+    "@christoferolaison/text": "^0.0.1",
+    "gatsby": "^2.0.0",
+    "react": "^16.5.1",
+    "react-dom": "^16.5.1"
   }
 }
