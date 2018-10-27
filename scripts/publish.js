@@ -28,20 +28,23 @@ async function publish({ stage }) {
       '--config-file',
       '../../babel.config.js',
     ])
-    const { stdout: SHA1 } = this.execSync('git', [
-      'rev-parse',
-      'HEAD',
-    ])
+    const SHA1 = git(['rev-parse', 'HEAD'])
     const preId = `"next-${SHA1.substring(0, 6)}"`
     lerna([
       'version',
       'prerelease',
-      '--conventional-commits',
       '--message',
-      '"chore: prerelease',
+      'chore: prerelease',
       '--yes',
       '--preid',
       preId,
+    ])
+    lerna([
+      'publish',
+      'from-git',
+      '--npm-tag',
+      'next',
+      '--yes',
     ])
   }
 }
