@@ -1,5 +1,4 @@
 {
   "name": "personal-web-feature",
-  "type": "static",
-  "alias": ["christoferolaison-feature.now.sh"]
+  "alias": "christoferolaison-feature.now.sh"
 }

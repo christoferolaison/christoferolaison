@@ -4,7 +4,7 @@
 #
 version: 2
 jobs:
-  build:
+  deploy:
     docker:
       - image: circleci/node:10
 
@@ -54,7 +54,7 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
       - run: sudo npm install --global --unsafe-perm now
       - run: sudo npm install --global --unsafe-perm lerna
-      - run: NODE_ENV=production ACTIVE_ENV=feature node scripts/deploy.js
+      - run: NODE_ENV=production STAGE=feature node scripts/deploy.js
 
 workflows:
   version: 2
@@ -65,3 +65,10 @@ workflows:
             branches:
               only:
                 - /feature/.*/
+  deploy:
+    jobs:
+      - deploy:
+          filters:
+            branches:
+              only:
+                - /master/
