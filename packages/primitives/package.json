@@ -2,7 +2,7 @@
   "name": "@christoferolaison/primitives",
   "version": "0.0.4-next-5d79c2.0",
   "description": "Primitives",
-  "main": "dist/index.js",
+  "main": "src/index.js",
   "author": "Christofer Olaison",
   "license": "MIT",
   "private": false,
