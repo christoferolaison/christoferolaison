@@ -1,13 +1,6 @@
-const execa = require('execa')
-const fs = require('fs')
+const { getWorkspaces, now } = require('./utils')
 
-const {
-  NODE_ENV,
-  STAGE,
-  CI,
-  NOW_TOKEN,
-  CIRCLE_BRANCH,
-} = process.env
+const { NODE_ENV, STAGE, NOW_TOKEN } = process.env
 
 const activeEnv = STAGE || NODE_ENV
 
@@ -17,25 +10,9 @@ if (!Boolean(activeEnv)) {
   throw new Error('Provide "NOW_TOKEN"')
 }
 
-const hasNowConfig = ({ location }) =>
-  fs.existsSync(`${location}/.now`)
-
-function now(args, opts) {
-  return execa.sync('now', args, opts).stdout
-}
-
-function lerna(args, opts) {
-  return execa.sync('lerna', args, opts).stdout
-}
-
-function getWorkspaces() {
-  const workspaces = lerna(['list', '--all', '--json'])
-  return JSON.parse(workspaces)
-}
-
 async function deploy(applications, { stage, nowToken }) {
   const tasks = applications.map(
-    async ({ location, name }) => {
+    async ({ location, name, nowConfig }) => {
       return new Promise(resolve => {
         now(
           [
@@ -70,7 +47,7 @@ async function deploy(applications, { stage, nowToken }) {
               '--token',
               nowToken,
               'remove',
-              name,
+              nowConfig.name,
               '--safe',
               '--yes',
             ],
@@ -89,8 +66,10 @@ async function deploy(applications, { stage, nowToken }) {
 }
 
 async function run({ stage, nowToken }) {
-  const workspaces = await getWorkspaces()
-  const applications = workspaces.filter(hasNowConfig)
+  const workspaces = await getWorkspaces({ stage })
+  const applications = workspaces.filter(
+    ({ nowConfig }) => nowConfig !== null,
+  )
   const deployedApplications = await deploy(applications, {
     stage,
     nowToken,

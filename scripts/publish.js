@@ -1,65 +1,91 @@
-const execa = require('execa')
+const {
+  getWorkspaces,
+  git,
+  lerna,
+  createScopeArgs,
+} = require('./utils')
 
-function lerna(args, opts) {
-  return execa.sync('lerna', args, opts).stdout
-}
+const compile = packages =>
+  lerna(
+    [
+      'exec',
+      '--stream',
+      ...createScopeArgs(packages),
+      '--',
+      'babel',
+      'src',
+      '-d',
+      'dist',
+      '--config-file',
+      '../../babel.config.js',
+    ],
+    {
+      stdio: 'inherit',
+    },
+  )
 
-function git(args, opts) {
-  return execa.sync('git', args, opts).stdout
-}
-
-function getWorkspaces() {
-  const workspaces = lerna(['list', '--all', '--json'])
-  return JSON.parse(workspaces)
-}
-
-async function publish({ stage }) {
-  if (stage === 'feature') {
-    lerna(
-      [
-        'exec',
-        '--stream',
-        '--scope',
-        '@christoferolaison/primitives',
-        '--',
-        'babel',
-        'src',
-        '-d',
-        'dist',
-        '--config-file',
-        '../../babel.config.js',
-      ],
-      {
+async function publish(packages, { stage }) {
+  switch (stage) {
+    case 'production':
+      compile(packages)
+      lerna(
+        [
+          'version',
+          '--conventional-commits',
+          '--exact',
+          '--message',
+          'chore: release [skip ci] 🚀',
+          '--yes',
+        ],
+        {
+          stdio: 'inherit',
+        },
+      )
+      lerna(['publish', 'from-git', '--yes'], {
         stdio: 'inherit',
-      },
-    )
-    const SHA1 = git(['rev-parse', 'HEAD'])
-    const preId = `next-${SHA1.substring(0, 6)}`
-    lerna(
-      [
-        'version',
-        'prerelease',
-        '--message',
-        'chore: prerelease',
-        '--yes',
-        '--preid',
-        preId,
-      ],
-      {
-        stdio: 'inherit',
-      },
-    )
-    lerna(
-      ['publish', 'from-git', '--npm-tag', 'next', '--yes'],
-      {
-        stdio: 'inherit',
-      },
-    )
+      })
+      break
+    case 'feature':
+      compile(packages)
+      const SHA1 = git(['rev-parse', 'HEAD'])
+      const preId = `next-${SHA1.substring(0, 6)}`
+      lerna(
+        [
+          'version',
+          'prerelease',
+          '--exact',
+          '--message',
+          'chore: prerelease [skip ci] ✈️',
+          '--yes',
+          '--preid',
+          preId,
+        ],
+        {
+          stdio: 'inherit',
+        },
+      )
+      lerna(
+        [
+          'publish',
+          'from-git',
+          '--npm-tag',
+          'next',
+          '--yes',
+        ],
+        {
+          stdio: 'inherit',
+        },
+      )
   }
 }
 
 async function run({ stage }) {
-  await publish({
+  const workspaces = await getWorkspaces({ stage })
+  const packages = workspaces.filter(
+    ({ isPackage, shouldSkipCompile }) =>
+      isPackage && !shouldSkipCompile,
+  )
+  await publish(packages, {
     stage,
   })
 }

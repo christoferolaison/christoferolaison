@@ -2,6 +2,17 @@
 #
 # Check https://circleci.com/docs/2.0/language-javascript/ for more details
 #
+aliases:
+  - &configure-github
+    name: 'Configure GitHub ✅'
+    command: |
+      git config --global user.email "circleci@circleci.com"
+      git config --global user.name "circleci"
+
+  - &auth-npm
+    name: 'Authenticate NPM ✅'
+    command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
+
 version: 2
 jobs:
   deploy:
@@ -12,7 +23,7 @@ jobs:
 
     steps:
       - checkout
-
+      - run: git pull origin ${CIRCLE_BRANCH}
       # Download and cache dependencies
       - restore_cache:
           keys:
@@ -30,7 +41,7 @@ jobs:
       - run: sudo npm install --global --unsafe-perm lerna
       - run: NODE_ENV=production node scripts/deploy.js
 
-  deploy_feature:
+  publish:
     docker:
       - image: circleci/node:10
 
@@ -52,22 +63,91 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
+      - run: sudo npm install --global --unsafe-perm lerna
+      - run: *configure-github
+      - run: *auth-npm
+      - run: NODE_ENV=production STAGE=production node scripts/publish.js
+
+  deploy_feature:
+    docker:
+      - image: circleci/node:10
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+      - run: git pull origin ${CIRCLE_BRANCH}
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+
+      - run: yarn install
+
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
       - run: sudo npm install --global --unsafe-perm now
       - run: sudo npm install --global --unsafe-perm lerna
       - run: NODE_ENV=production STAGE=feature node scripts/deploy.js
 
+  publish_feature:
+    docker:
+      - image: circleci/node:10
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+
+      - run: yarn install
+
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+      - run: sudo npm install --global --unsafe-perm lerna
+      - run: *configure-github
+      - run: *auth-npm
+      - run: NODE_ENV=production STAGE=feature node scripts/publish.js
+
 workflows:
   version: 2
-  deploy_feature:
+  deploy_and_publish_feature:
     jobs:
-      - deploy_feature:
+      - publish_feature:
           filters:
             branches:
               only:
                 - /feature/.*/
-  deploy:
+      - deploy_feature:
+          requires:
+            - publish_feature
+          filters:
+            branches:
+              only:
+                - /feature/.*/
+
+  deploy_and_publish:
     jobs:
+      - publish:
+          filters:
+            branches:
+              only:
+                - /master/
       - deploy:
+          requires:
+            - publish
           filters:
             branches:
               only:

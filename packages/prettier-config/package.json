@@ -1,7 +1,11 @@
 {
   "name": "@christoferolaison/prettier-config",
-  "private": true,
-  "version": "0.1.2-next-41cac2.0",
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "skipCompile": true,
+  "version": "0.1.2-next-433052.0",
   "description": "My opinionated prettier config.",
   "keywords": [
     "prettier",

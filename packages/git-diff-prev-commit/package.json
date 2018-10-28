@@ -1,7 +1,8 @@
 {
   "name": "@christoferolaison/git-diff-prev-commit",
   "private": true,
-  "version": "0.1.1-next-41cac2.0",
+  "skipCompile": true,
+  "version": "0.1.1-next-07992e.0",
   "description": "Returns a list of changed files between HEAD and previous commit.",
   "keywords": [
     "git",
