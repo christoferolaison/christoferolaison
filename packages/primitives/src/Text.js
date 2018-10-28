@@ -6,10 +6,18 @@ function Text({
   size = 14,
   weight = 'regular',
   color = '#000000',
+  marginTop = 0,
+  marginRight = 0,
+  marginLeft = 0,
+  marginBottom = 0,
 }) {
   return (
     <p
       style={{
+        marginTop,
+        marginRight,
+        marginBottom,
+        marginLeft,
         color,
         fontSize: size,
         textAlign: align,
