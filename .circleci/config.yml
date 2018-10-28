@@ -91,19 +91,16 @@ jobs:
 
 workflows:
   version: 2
-  deploy_feature:
+  deploy_and_publish_feature:
     jobs:
-      - deploy_feature:
-          requires:
-            - publish_feature
+      - publish_feature:
           filters:
             branches:
               only:
                 - /feature/.*/
-
-  publish_feature:
-    jobs:
-      - publish_feature:
+      - deploy_feature:
+          requires:
+            - publish_feature
           filters:
             branches:
               only:
