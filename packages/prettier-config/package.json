@@ -1,6 +1,9 @@
 {
   "name": "@christoferolaison/prettier-config",
   "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
   "skipCompile": true,
   "version": "0.1.2-next-07992e.0",
   "description": "My opinionated prettier config.",
