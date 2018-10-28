@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.3.0"></a>
+# [0.3.0](https://github.com/christoferolaison/christoferolaison/compare/personal-web@0.2.0...personal-web@0.3.0) (2018-10-28)
+
+
+### Features
+
+* margin ([1c2d285](https://github.com/christoferolaison/christoferolaison/commit/1c2d285))
+
+
+
+
+
 <a name="0.2.0"></a>
 # [0.2.0](https://github.com/christoferolaison/christoferolaison/compare/personal-web@0.1.0...personal-web@0.2.0) (2018-10-28)
 
