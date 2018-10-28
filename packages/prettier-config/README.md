@@ -1,11 +1,26 @@
-# `prettier-config`
+# prettier-config
 
-> TODO: description
+Shareable prettier config
+
+## Installation
+
+```bash
+  yarn add @christoferolaison/prettier-config
+```
+
+```bash
+  npm install @christoferolaison/prettier-config
+```
 
 ## Usage
 
-```
-const prettierConfig = require('prettier-config');
+```javascript
+// prettier.config.js
 
-// TODO: DEMONSTRATE API
+module.exports = require('@christoferolaison/prettier-config')
 ```
+
+## Further reading
+
+- [Prettier](https://prettier.io/)
+- [Configuration](https://prettier.io/docs/en/configuration.html)
