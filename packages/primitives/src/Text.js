@@ -1,16 +1,19 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { ThemeContext } from './theme'
 
 function Text({
   children,
   align = 'left',
   size = 14,
   weight = 'regular',
-  color = '#000000',
+  color = 'primary',
   marginTop = 0,
   marginRight = 0,
   marginLeft = 0,
   marginBottom = 0,
 }) {
+  const theme = useContext(ThemeContext)
+
   return (
     <p
       style={{
@@ -18,7 +21,7 @@ function Text({
         marginRight,
         marginBottom,
         marginLeft,
-        color,
+        color: theme.color[color],
         fontSize: size,
         textAlign: align,
         fontWeight: weight,
