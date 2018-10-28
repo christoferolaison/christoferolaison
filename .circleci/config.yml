@@ -4,10 +4,14 @@
 #
 aliases:
   - &configure-github
-    name: 'Configure GitHub Bot ✅'
+    name: 'Configure GitHub ✅'
     command: |
       git config --global user.email "circleci@circleci.com"
-      git config --global user.name "circleci-bot"
+      git config --global user.name "circleci"
+
+  - &auth-npm
+    name: 'Authenticate NPM ✅'
+    command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
 
 version: 2
 jobs:
