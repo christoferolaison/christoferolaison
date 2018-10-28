@@ -3,7 +3,7 @@ import { Text } from '@christoferolaison/primitives'
 
 export default () => (
   <>
-    <Text size={18} weight="bold">
+    <Text size={22} weight="bold">
       Hej!
     </Text>
     <Text>JavaScript Developer</Text>
