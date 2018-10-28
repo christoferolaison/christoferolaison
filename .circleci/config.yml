@@ -123,20 +123,20 @@ jobs:
 
 workflows:
   version: 2
-  deploy_and_publish_feature:
+  publish_feature:
     jobs:
       - publish_feature:
           filters:
             branches:
               only:
                 - /feature/.*/
+
+  deploy_feature:
+    jobs:
       - deploy_feature:
-          requires:
-            - publish_feature
           filters:
-            branches:
-              only:
-                - /feature/.*/
+            tags:
+              only: /.*/
 
   deploy_and_publish:
     jobs:
