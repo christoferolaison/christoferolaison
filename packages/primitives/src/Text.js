@@ -1,17 +1,24 @@
 import React from 'react'
 
-function Text({ children }) {
+function Text({
+  children,
+  align = 'left',
+  size = 14,
+  weight = 'regular',
+}) {
   return (
-    <span
+    <p
       style={{
-        color: 'red',
-        fontSize: 300,
+        color: '#000000',
+        fontSize: size,
+        textAlign: align,
+        fontWeight: weight,
         fontFamily:
           '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif',
       }}
     >
       {children}
-    </span>
+    </p>
   )
 }
 
