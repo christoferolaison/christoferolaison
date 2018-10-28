@@ -91,6 +91,7 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
       - run: sudo npm install --global --unsafe-perm lerna
       - run: *configure-github
+      - run: *auth-npm
       - run: NODE_ENV=production STAGE=feature node scripts/publish.js
 
 workflows:
