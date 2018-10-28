@@ -49,7 +49,7 @@ jobs:
 
     steps:
       - checkout
-
+      - run: git pull origin ${CIRCLE_BRANCH}
       # Download and cache dependencies
       - restore_cache:
           keys:
