@@ -2,7 +2,7 @@
   "name": "@christoferolaison/prettier-config",
   "private": false,
   "skipCompile": true,
-  "version": "0.1.2-next-a38641.0",
+  "version": "0.1.2-next-07992e.0",
   "description": "My opinionated prettier config.",
   "keywords": [
     "prettier",
