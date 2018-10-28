@@ -5,11 +5,12 @@ function Text({
   align = 'left',
   size = 14,
   weight = 'regular',
+  color = '#000000',
 }) {
   return (
     <p
       style={{
-        color: '#000000',
+        color,
         fontSize: size,
         textAlign: align,
         fontWeight: weight,
