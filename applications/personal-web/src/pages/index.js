@@ -3,9 +3,9 @@ import { Text } from '@christoferolaison/primitives'
 
 export default () => (
   <>
-    <Text size={18} weight="bold">
-      Hej!
+    <Text size={100} weight="bold" align="center">
+      Hej hej tja!
     </Text>
-    <Text>JavaScript Developer</Text>
+    <Text align="center">JavaScript Developer</Text>
   </>
 )

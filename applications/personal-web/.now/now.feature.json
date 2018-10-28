@@ -1,4 +1,5 @@
 {
   "name": "personal-web-feature",
-  "alias": "christoferolaison-feature.now.sh"
+  "alias": "christoferolaison-feature.now.sh",
+  "regions": ["bru"]
 }
