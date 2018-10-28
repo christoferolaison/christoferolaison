@@ -23,7 +23,7 @@ jobs:
 
     steps:
       - checkout
-
+      - run: git pull origin ${CIRCLE_BRANCH}
       # Download and cache dependencies
       - restore_cache:
           keys:
@@ -40,6 +40,33 @@ jobs:
       - run: sudo npm install --global --unsafe-perm now
       - run: sudo npm install --global --unsafe-perm lerna
       - run: NODE_ENV=production node scripts/deploy.js
+
+  publish:
+    docker:
+      - image: circleci/node:10
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+
+      - run: yarn install
+
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+      - run: sudo npm install --global --unsafe-perm lerna
+      - run: *configure-github
+      - run: *auth-npm
+      - run: NODE_ENV=production STAGE=production node scripts/publish.js
 
   deploy_feature:
     docker:
@@ -111,9 +138,16 @@ workflows:
               only:
                 - /feature/.*/
 
-  deploy:
+  deploy_and_publish:
     jobs:
+      - publish:
+          filters:
+            branches:
+              only:
+                - /master/
       - deploy:
+          requires:
+            - publish
           filters:
             branches:
               only:

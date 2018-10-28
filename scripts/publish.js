@@ -1,42 +1,52 @@
-const execa = require('execa')
+const {
+  getWorkspaces,
+  git,
+  lerna,
+  createScopeArgs,
+} = require('./utils')
 
-function lerna(args, opts) {
-  return execa.sync('lerna', args, opts).stdout
-}
+const compile = packages =>
+  lerna(
+    [
+      'exec',
+      '--stream',
+      ...createScopeArgs(packages),
+      '--',
+      'babel',
+      'src',
+      '-d',
+      'dist',
+      '--config-file',
+      '../../babel.config.js',
+    ],
+    {
+      stdio: 'inherit',
+    },
+  )
 
-function git(args, opts) {
-  return execa.sync('git', args, opts).stdout
-}
-
-function getWorkspaces() {
-  const workspaces = lerna(['list', '--all', '--json'])
-  return JSON.parse(workspaces)
-}
-
-async function publish({ stage }) {
+async function publish(packages, { stage }) {
   switch (stage) {
     case 'production':
-      console.log('prod')
-      break
-    case 'feature':
+      compile(packages)
       lerna(
         [
-          'exec',
-          '--stream',
-          '--scope',
-          '@christoferolaison/primitives',
-          '--',
-          'babel',
-          'src',
-          '-d',
-          'dist',
-          '--config-file',
-          '../../babel.config.js',
+          'version',
+          '--conventional-commits',
+          '--exact',
+          '--message',
+          'chore: release [skip ci] 🚀',
+          '--yes',
         ],
         {
           stdio: 'inherit',
         },
       )
+      lerna(['publish', 'from-git', '--yes'], {
+        stdio: 'inherit',
+      })
+      break
+    case 'feature':
+      compile(packages)
       const SHA1 = git(['rev-parse', 'HEAD'])
       const preId = `next-${SHA1.substring(0, 6)}`
       lerna(
@@ -45,7 +55,7 @@ async function publish({ stage }) {
           'prerelease',
           '--exact',
           '--message',
-          'chore: prerelease [skip ci]',
+          'chore: prerelease [skip ci] ✈️',
           '--yes',
           '--preid',
           preId,
@@ -70,7 +80,12 @@ async function publish({ stage }) {
 }
 
 async function run({ stage }) {
-  await publish({
+  const workspaces = await getWorkspaces({ stage })
+  const packages = workspaces.filter(
+    ({ isPackage, shouldSkipCompile }) =>
+      isPackage && !shouldSkipCompile,
+  )
+  await publish(packages, {
     stage,
   })
 }
