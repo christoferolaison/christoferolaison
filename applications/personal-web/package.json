@@ -1,7 +1,7 @@
 {
   "name": "personal-web",
   "private": true,
-  "version": "0.0.2-next-07992e.0",
+  "version": "0.0.2-next-aeb641.0",
   "description": "Gatsby hello world starter",
   "license": "MIT",
   "scripts": {
@@ -11,7 +11,7 @@
     "serve": "gatsby serve"
   },
   "dependencies": {
-    "@christoferolaison/primitives": "0.0.4-next-bc583d.0",
+    "@christoferolaison/primitives": "0.0.4-next-aeb641.0",
     "gatsby": "2.0.31",
     "react": "16.7.0-alpha.0",
     "react-dom": "16.7.0-alpha.0",
