@@ -1,6 +1,6 @@
 {
   "name": "@christoferolaison/primitives",
-  "version": "0.3.0",
+  "version": "0.3.1-next-668349.0",
   "description": "Primitives",
   "main": "src/index.js",
   "author": "Christofer Olaison",
