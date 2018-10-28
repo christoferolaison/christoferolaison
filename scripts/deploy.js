@@ -1,4 +1,7 @@
+const path = require('path')
 const execa = require('execa')
+const loadJsonFile = require('load-json-file')
+const readPkg = require('read-pkg')
 const fs = require('fs')
 
 const {
@@ -20,6 +23,16 @@ if (!Boolean(activeEnv)) {
 const hasNowConfig = ({ location }) =>
   fs.existsSync(`${location}/.now`)
 
+const getNowConfig = ({ location, stage }) => {
+  console.log({ has: hasNowConfig({ location }), location })
+  if (hasNowConfig({ location })) {
+    return loadJsonFile.sync(
+      `${location}/.now/now.${stage}.json`,
+    )
+  }
+  return null
+}
+
 function now(args, opts) {
   return execa.sync('now', args, opts).stdout
 }
@@ -28,14 +41,33 @@ function lerna(args, opts) {
   return execa.sync('lerna', args, opts).stdout
 }
 
-function getWorkspaces() {
-  const workspaces = lerna(['list', '--all', '--json'])
-  return JSON.parse(workspaces)
+function getWorkspaces({ stage }) {
+  const workspaces = JSON.parse(
+    lerna(['list', '--all', '--json']),
+  )
+  return workspaces.map(({ location }) => {
+    const pkg = readPkg.sync({ cwd: location })
+
+    const parentDir = path.basename(path.dirname(location))
+    const isApp = parentDir === 'applications'
+    const isPackage = parentDir === 'packages'
+    const nowConfig = getNowConfig({ location, stage })
+    console.log({ nowConfig })
+    return {
+      location,
+      name: pkg.name,
+      isPrivate: Boolean(pkg.private),
+      shouldSkipCompile: Boolean(pkg.skipCompile),
+      isApp,
+      isPackage,
+      nowConfig,
+    }
+  })
 }
 
 async function deploy(applications, { stage, nowToken }) {
   const tasks = applications.map(
-    async ({ location, name }) => {
+    async ({ location, name, nowConfig }) => {
       return new Promise(resolve => {
         now(
           [
@@ -70,7 +102,7 @@ async function deploy(applications, { stage, nowToken }) {
               '--token',
               nowToken,
               'remove',
-              name,
+              nowConfig.name,
               '--safe',
               '--yes',
             ],
@@ -89,8 +121,10 @@ async function deploy(applications, { stage, nowToken }) {
 }
 
 async function run({ stage, nowToken }) {
-  const workspaces = await getWorkspaces()
-  const applications = workspaces.filter(hasNowConfig)
+  const workspaces = await getWorkspaces({ stage })
+  const applications = workspaces.filter(
+    ({ nowConfig }) => nowConfig !== null,
+  )
   const deployedApplications = await deploy(applications, {
     stage,
     nowToken,
