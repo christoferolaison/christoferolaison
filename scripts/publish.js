@@ -34,7 +34,7 @@ async function publish(packages, { stage }) {
           '--conventional-commits',
           '--exact',
           '--message',
-          'chore: release [skip ci] 🚀',
+          'chore: release [skip ci]  🚀',
           '--yes',
         ],
         {
@@ -55,7 +55,7 @@ async function publish(packages, { stage }) {
           'prerelease',
           '--exact',
           '--message',
-          'chore: prerelease [skip ci] ✈️',
+          'chore: prerelease  ✈️',
           '--yes',
           '--preid',
           preId,
