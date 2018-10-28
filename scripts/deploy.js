@@ -21,6 +21,8 @@ async function deploy(applications, { stage, nowToken }) {
             '--local-config',
             `.now/now.${stage}.json`,
             '--public',
+            '--regions',
+            'bru',
             'deploy',
           ],
           {
