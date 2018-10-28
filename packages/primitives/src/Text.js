@@ -4,7 +4,7 @@ function Text({ children }) {
   return (
     <span
       style={{
-        color: 'blue',
+        color: 'gold',
         fontFamily:
           '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif',
       }}
