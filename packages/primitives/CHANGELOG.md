@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.2.0"></a>
+# [0.2.0](https://github.com/christoferolaison/christoferolaison/compare/@christoferolaison/primitives@0.1.0...@christoferolaison/primitives@0.2.0) (2018-10-28)
+
+
+### Features
+
+* added color prop on text component ([e617c72](https://github.com/christoferolaison/christoferolaison/commit/e617c72))
+
+
+
+
+
 <a name="0.1.0"></a>
 # [0.1.0](https://github.com/christoferolaison/christoferolaison/compare/@christoferolaison/primitives@0.0.4...@christoferolaison/primitives@0.1.0) (2018-10-28)
 
