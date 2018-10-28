@@ -39,6 +39,7 @@ async function publish({ stage }) {
       [
         'version',
         'prerelease',
+        '--exact',
         '--message',
         'chore: prerelease [skip ci]',
         '--yes',
