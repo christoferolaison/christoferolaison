@@ -1,6 +1,6 @@
 {
   "name": "@christoferolaison/system-font",
-  "version": "0.1.0",
+  "version": "0.1.1-next-4d00c7.0",
   "description": "System font stack",
   "skipCompile": true,
   "keywords": [
