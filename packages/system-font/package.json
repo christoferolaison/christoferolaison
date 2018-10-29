@@ -2,6 +2,9 @@
   "name": "@christoferolaison/system-font",
   "version": "0.1.0",
   "description": "System font stack",
+  "publishConfig": {
+    "access": "public"
+  },
   "skipCompile": true,
   "keywords": [
     "font"
