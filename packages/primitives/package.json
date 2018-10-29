@@ -10,6 +10,7 @@
     "access": "public"
   },
   "dependencies": {
+    "@christoferolaison/system-font": "0.1.0",
     "react": "16.7.0-alpha.0"
   }
 }
