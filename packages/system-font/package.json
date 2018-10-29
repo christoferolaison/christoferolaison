@@ -1,0 +1,33 @@
+{
+  "name": "@christoferolaison/system-font",
+  "version": "0.1.1-next-866efe.0",
+  "description": "System font stack",
+  "publishConfig": {
+    "access": "public"
+  },
+  "skipCompile": true,
+  "keywords": [
+    "font"
+  ],
+  "author": "Christofer Olaison <christofer.olaison@mentimeter.com>",
+  "homepage": "https://github.com/christoferolaison/christoferolaison#readme",
+  "license": "ISC",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/christoferolaison/christoferolaison.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/christoferolaison/christoferolaison/issues"
+  }
+}

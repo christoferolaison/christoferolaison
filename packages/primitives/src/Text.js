@@ -1,4 +1,5 @@
 import React, { useContext } from 'react'
+import systemFont from '@christoferolaison/system-font'
 import { ThemeContext } from './theme'
 
 function Text({
@@ -11,6 +12,7 @@ function Text({
   marginRight = 0,
   marginLeft = 0,
   marginBottom = 0,
+  lineHeight = 1.25,
 }) {
   const theme = useContext(ThemeContext)
 
@@ -21,12 +23,12 @@ function Text({
         marginRight,
         marginBottom,
         marginLeft,
-        color: theme.color[color],
+        lineHeight,
         fontSize: size,
         textAlign: align,
         fontWeight: weight,
-        fontFamily:
-          '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif',
+        fontFamily: systemFont,
+        color: theme.color[color],
       }}
     >
       {children}

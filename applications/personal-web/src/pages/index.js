@@ -10,29 +10,32 @@ import {
 function Index() {
   const [currentTheme, setTheme] = useState(darkTheme)
   return (
-    <ThemeContext.Provider value={currentTheme}>
-      <Box
-        backgroundColor="primary"
-        widht="100vw"
-        height="100vh"
-        onClick={() =>
-          setTheme(
-            currentTheme === darkTheme
-              ? lightTheme
-              : darkTheme,
-          )
-        }
-      >
-        <Text
-          color="secondary"
-          size={100}
-          weight="bold"
-          marginBottom={10}
+    <>
+      <style>{`body { margin: 0}`}</style>
+      <ThemeContext.Provider value={currentTheme}>
+        <Box
+          backgroundColor="primary"
+          widht="100vw"
+          height="100vh"
+          onClick={() =>
+            setTheme(
+              currentTheme === darkTheme
+                ? lightTheme
+                : darkTheme,
+            )
+          }
         >
-          Hej!
-        </Text>
-      </Box>
-    </ThemeContext.Provider>
+          <Text
+            color="secondary"
+            size={100}
+            weight="bold"
+            marginBottom={10}
+          >
+            Hej!
+          </Text>
+        </Box>
+      </ThemeContext.Provider>
+    </>
   )
 }
 
