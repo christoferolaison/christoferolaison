@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { memo, useState } from 'react'
 import {
   Text,
   Box,
@@ -6,6 +6,8 @@ import {
   lightTheme,
   darkTheme,
 } from '@christoferolaison/primitives'
+
+import msg from '@christoferolaison/primitives/test'
 
 function Index() {
   const [currentTheme, setTheme] = useState(darkTheme)
@@ -29,11 +31,11 @@ function Index() {
           weight="bold"
           marginBottom={10}
         >
-          Hej!
+          {msg}
         </Text>
       </Box>
     </ThemeContext.Provider>
   )
 }
 
-export default Index
+export default memo(Index)
